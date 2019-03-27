@@ -1,0 +1,33 @@
+{
+  "name": "typescript-mongodb-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "dev": "ts-node src/index.ts",
+    "public": "ncp ./src/public/ ./dist/public/",
+    "hbscopy": "ncp ./src/views/ ./dist/views/",
+    "build": "npm run clean && tsc && npm run hbscopy && npm run public",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "mongoose": "^5.4.20",
+    "morgan": "^1.9.1",
+    "rimraf": "^2.6.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "@types/express-handlebars": "0.0.30",
+    "@types/mongoose": "^5.3.24",
+    "ncp": "^2.0.0",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.4000"
+  }
+}
