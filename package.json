@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf ./dist",
-    "dev": "ts-node src/index.ts",
+    "dev": "ts-node-dev --respawn src/index.ts",
     "public": "ncp ./src/public/ ./dist/public/",
     "hbscopy": "ncp ./src/views/ ./dist/views/",
     "build": "npm run clean && tsc && npm run hbscopy && npm run public",
@@ -15,19 +15,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
-    "express-handlebars": "^3.0.2",
-    "mongoose": "^5.4.20",
-    "morgan": "^1.9.1",
-    "rimraf": "^2.6.3"
+    "@typegoose/typegoose": "^9.7.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3",
+    "mongoose": "^6.2.7",
+    "morgan": "^1.10.0",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "@types/express": "^4.16.1",
-    "@types/express-handlebars": "0.0.30",
-    "@types/mongoose": "^5.3.24",
+    "@types/express": "^4.17.13",
+    "@types/express-handlebars": "5.3.1",
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^17.0.21",
     "ncp": "^2.0.0",
-    "nodemon": "^1.18.10",
-    "ts-node": "^8.0.3",
-    "typescript": "^3.3.4000"
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.2"
   }
 }

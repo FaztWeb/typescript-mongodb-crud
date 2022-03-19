@@ -1,2 +1,8 @@
+# node dependencies
 node_modules
+
+# typescript build
 dist
+
+# environment variables
+.env

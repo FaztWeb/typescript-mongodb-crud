@@ -1,53 +1,53 @@
-import express from 'express';
-import morgan from 'morgan';
-import exphbs from 'express-handlebars';
-import path from 'path';
+import express from "express";
+import morgan from "morgan";
+import { create } from "express-handlebars";
+import path from "path";
+import { PORT } from "./config";
 
 // Routes
-import indexRoutes from './routes';
-import tasksRoutes from './routes/tasks';
+import indexRoutes from "./routes/index.routes";
+import tasksRoutes from "./routes/tasks.routes";
 
-class Applicaction {
+export class Applicaction {
+  app: express.Application;
 
-    app: express.Application;
+  constructor() {
+    this.app = express();
+    this.settings();
+    this.middlewares();
+    this.routes();
+  }
 
-    constructor() {
-        this.app = express();
-        this.settings();
-        this.middlewares();
-        this.routes();
-    }
+  settings() {
+    this.app.set("views", path.join(__dirname, "views"));
+    this.app.engine(
+      ".hbs",
+      create({
+        layoutsDir: path.join(this.app.get("views"), "layouts"),
+        partialsDir: path.join(this.app.get("views"), "partials"),
+        defaultLayout: "main",
+        extname: ".hbs",
+      }).engine
+    );
+    this.app.set("view engine", ".hbs");
+  }
 
-    settings() {
-        this.app.set('port', 4000);
-        this.app.set('views', path.join(__dirname, 'views'));
-        this.app.engine('.hbs', exphbs({
-            layoutsDir: path.join(this.app.get('views'), 'layouts'),
-            partialsDir: path.join(this.app.get('views'), 'partials'),
-            defaultLayout: 'main',
-            extname: '.hbs'
-        }));
-        this.app.set('view engine', '.hbs');
-    }
+  middlewares() {
+    this.app.use(morgan("dev"));
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(express.json());
+  }
 
-    middlewares() {
-        this.app.use(morgan('dev'));
-        this.app.use(express.urlencoded({extended: false}));
-        this.app.use(express.json());
-    }
+  routes() {
+    this.app.use("/", indexRoutes);
+    this.app.use("/tasks", tasksRoutes);
 
-    routes() {
-        this.app.use('/', indexRoutes);
-        this.app.use('/tasks', tasksRoutes);
+    this.app.use(express.static(path.join(__dirname, "public")));
+  }
 
-        this.app.use(express.static(path.join(__dirname, 'public')));
-    }
-
-    start(): void {
-        this.app.listen(this.app.get('port'), () => {
-            console.log('>>> Server is running at', this.app.get('port'));
-        });
-    }
+  start(): void {
+    this.app.listen(PORT, () => {
+      console.log("Server is running at", PORT);
+    });
+  }
 }
-
-export default Applicaction;
