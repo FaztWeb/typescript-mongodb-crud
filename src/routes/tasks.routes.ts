@@ -4,7 +4,7 @@ import {
   renderEditForm,
   renderTaskForm,
   renderTasks,
-  saveTask,
+  createTask,
   updateTask,
 } from "../controllers/task.controller";
 
@@ -13,7 +13,7 @@ const router = Router();
 router.get("/list", renderTasks);
 
 router.get("/create", renderTaskForm);
-router.post("/create", saveTask);
+router.post("/create", createTask);
 
 router.get("/delete/:id", deleteTask);
 

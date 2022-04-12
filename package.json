@@ -15,21 +15,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@typegoose/typegoose": "^9.7.0",
+    "@typegoose/typegoose": "^9.7.1",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "express-handlebars": "^6.0.3",
-    "mongoose": "^6.2.7",
+    "express-handlebars": "^6.0.5",
+    "mongoose": "^6.2.10",
     "morgan": "^1.10.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "zod": "^3.14.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/express-handlebars": "5.3.1",
     "@types/mongoose": "^5.11.96",
-    "@types/node": "^17.0.21",
+    "@types/node": "^17.0.23",
     "ncp": "^2.0.0",
     "ts-node-dev": "^1.1.8",
-    "typescript": "^4.6.2"
+    "typescript": "^4.6.3"
   }
 }

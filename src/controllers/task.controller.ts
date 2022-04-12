@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
 import Task from "../models/task.model";
+import {
+  createTaskSchema,
+  createTaskType,
+  updateTaskSchema,
+  updateTaskType,
+} from "../schemas/task.schema";
 
 export const renderTasks = async (req: Request, res: Response) => {
   const tasks = await Task.find().lean();
@@ -12,11 +18,23 @@ export const renderTaskForm = (req: Request, res: Response) => {
   res.render("tasks/create");
 };
 
-export const saveTask = async (req: Request, res: Response) => {
-  const { title, description } = req.body;
-  const task = new Task({ title, description });
-  await task.save();
-  res.redirect("/tasks/list");
+export const createTask = async (
+  req: Request<{}, {}, createTaskType>,
+  res: Response
+) => {
+  try {
+    const { title, description } = createTaskSchema.parse(req.body);
+    const task = new Task({ title, description });
+    await task.save();
+    res.redirect("/tasks/list");
+  } catch (errors) {
+    if (errors.issues) {
+      return res.render("tasks/create", { errors: errors.issues });
+    }
+    return res.render("tasks/create", {
+      errors: [{ message: "Something Goes Wrong" }],
+    });
+  }
 };
 
 export const deleteTask = async (req: Request, res: Response) => {
@@ -32,12 +50,11 @@ export const renderEditForm = async (req, res) => {
   return res.render("tasks/create", { task });
 };
 
-export const updateTask = async (req: Request, res: Response) => {
+export const updateTask = async (
+  req: Request<any, {}, updateTaskType>,
+  res: Response
+) => {
   const { id } = req.params;
-  const { title, description } = req.body;
-  await Task.findByIdAndUpdate(id, {
-    title,
-    description,
-  });
+  await Task.findByIdAndUpdate(id, req.body);
   return res.redirect("/tasks/list");
 };
